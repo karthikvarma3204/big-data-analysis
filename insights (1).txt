@@ -1,0 +1,32 @@
+Summary Statistics:
+             Order ID           Sales        Quantity
+count  1000000.000000  1000000.000000  1000000.000000
+mean    500000.500000      252.407872        4.999255
+std     288675.278932      142.845518        2.582282
+min          1.000000        5.000000        1.000000
+25%     250000.750000      128.830000        3.000000
+50%     500000.500000      252.250000        5.000000
+75%     750000.250000      376.120000        7.000000
+max    1000000.000000      500.000000        9.000000
+
+Missing Values:
+Order ID        0
+Category        0
+Sales           0
+Quantity        0
+Product Name    0
+
+Average Sales by Category:
+Category
+Books             252.399993
+Clothing          252.978213
+Electronics       252.250288
+Home & Kitchen    252.308482
+Sports            252.102048
+
+Top Categories:
+Books             200379
+Clothing          199970
+Home & Kitchen    199962
+Electronics       199918
+Sports            199771
