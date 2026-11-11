@@ -1,30 +1,22 @@
-import dask.dataframe as dd  
+"""Explore the bundled sample sales dataset with Dask."""
+from pathlib import Path
+import dask.dataframe as dd
 
-# Load the large dataset
-df = dd.read_csv("sales_data.csv")  
+ROOT = Path(__file__).resolve().parent
+SOURCE = ROOT / "sales_data_sample (1).csv"
+OUTPUT = ROOT / "processed_sales_data.csv"
 
-# Display the first few rows
-print("First few rows of the dataset:")
-print(df.head())
+def main():
+    if not SOURCE.exists():
+        raise FileNotFoundError(f"Missing data file: {SOURCE}")
+    df = dd.read_csv(str(SOURCE))
+    print("First five rows:\n", df.head())
+    print("\nSummary statistics:\n", df.describe().compute())
+    print("\nMissing values:\n", df.isnull().sum().compute())
+    print("\nAverage sales by category:\n", df.groupby("Category")["Sales"].mean().compute())
+    print("\nCategory counts:\n", df["Category"].value_counts().compute())
+    df.to_csv(str(OUTPUT), single_file=True, index=False)
+    print(f"\nSaved processed data to {OUTPUT}")
 
-# Basic data summary
-print("\nSummary Statistics:")
-print(df.describe().compute())
-
-# Count missing values
-print("\nMissing Values:")
-print(df.isnull().sum().compute())
-
-# Group by 'Category' and calculate the average 'Sales'
-category_sales_avg = df.groupby("Category")["Sales"].mean().compute()
-print("\nAverage Sales by Category:")
-print(category_sales_avg)
-
-# Find the most popular category
-popular_category = df["Category"].value_counts().compute()
-print("\nTop Categories:")
-print(popular_category)
-
-# Save the processed data
-df.to_csv("processed_sales_data.csv", single_file=True)
-print("\nProcessed data saved as 'processed_sales_data.csv'.")
+if __name__ == "__main__":
+    main()
